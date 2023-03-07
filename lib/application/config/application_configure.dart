@@ -1,3 +1,4 @@
+import 'package:api_pet/application/config/service_locator_configure.dart';
 import 'package:get_it/get_it.dart';
 import 'package:dotenv/dotenv.dart';
 
@@ -10,6 +11,7 @@ class ApplicationConfigure {
     await _loadEnv();
     _loadDatabaseConfigure();
     _configureLogger();
+    _loadDependencies();
   }
 
   Future<void> _loadEnv() async => load();
@@ -28,4 +30,6 @@ class ApplicationConfigure {
 
   void _configureLogger() =>
       GetIt.I.registerLazySingleton<ILogger>(() => Logger());
+
+  void _loadDependencies() => configureDependencies();
 }
