@@ -1,11 +1,15 @@
-import 'package:api_pet/application/config/database_connection_configure.dart';
-import 'package:dotenv/dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:dotenv/dotenv.dart';
+
+import 'package:api_pet/application/config/database_connection_configure.dart';
+import 'package:api_pet/application/logger/i_logger.dart';
+import 'package:api_pet/application/logger/logger.dart';
 
 class ApplicationConfigure {
   Future<void> loadConfigApplication() async {
     await _loadEnv();
     _loadDatabaseConfigure();
+    _configureLogger();
   }
 
   Future<void> _loadEnv() async => load();
@@ -21,4 +25,7 @@ class ApplicationConfigure {
 
     GetIt.I.registerSingleton(databaseConfigure);
   }
+
+  void _configureLogger() =>
+      GetIt.I.registerLazySingleton<ILogger>(() => Logger());
 }
