@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:api_pet/application/config/application_configure.dart';
 import 'package:api_pet/application/middlewares/cors/cors_middleware.dart';
+import 'package:api_pet/application/middlewares/default_content_type/default_content_type_middleware.dart';
 
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
@@ -18,6 +19,9 @@ void main(List<String> args) async {
   // Configure a pipeline that logs requests.
   final handler = Pipeline()
       .addMiddleware(CorsMiddleware().handler)
+      .addMiddleware(
+          DefaultContentTypeMiddleware('application/json;charset=utf-8')
+              .handler)
       .addMiddleware(logRequests())
       .addHandler(router);
 
